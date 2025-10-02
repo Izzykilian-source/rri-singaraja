@@ -54,18 +54,46 @@
 
     <!-- MENU DESKTOP -->
     <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
-      <a href="{{ route('form.create') }}"
-         class="{{ request()->is('data-kunjungan') ? 'text-brand-700 underline underline-offset-8 decoration-2' : 'text-gray-700 hover:text-brand-700' }}">
-        Data Kunjungan
+      <!-- Beranda -->
+      <a href="{{ url('/') }}"
+         class="{{ request()->is('/') ? 'text-brand-700 underline underline-offset-8 decoration-2' : 'text-gray-700 hover:text-brand-700' }}">
+        Beranda
       </a>
-      <a href="{{ route('visit.index') }}"
-         class="{{ request()->is('laporan-kunjungan') ? 'text-brand-700 underline underline-offset-8 decoration-2' : 'text-gray-700 hover:text-brand-700' }}">
-        Laporan Kunjungan
-      </a>
+
+      <!-- Data Kunjungan (submenu AlpineJS) -->
+      <div x-data="{ open: false, timeout: null }" class="relative"
+           @mouseenter="clearTimeout(timeout); open = true"
+           @mouseleave="timeout = setTimeout(() => open = false, 200)">
+        <button class="text-gray-700 hover:text-brand-700 flex items-center gap-1">
+          Data Kunjungan
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"
+               viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round"
+               d="M19 9l-7 7-7-7" /></svg>
+        </button>
+        <!-- SUBMENU -->
+        <div x-show="open"
+             x-transition:enter="transition ease-out duration-200"
+             x-transition:enter-start="opacity-0 translate-y-1"
+             x-transition:enter-end="opacity-100 translate-y-0"
+             x-transition:leave="transition ease-in duration-150"
+             x-transition:leave-start="opacity-100 translate-y-0"
+             x-transition:leave-end="opacity-0 translate-y-1"
+             class="absolute left-0 mt-2 w-48 bg-white border rounded-md shadow-lg z-50 py-2"
+             @mouseenter="clearTimeout(timeout); open = true"
+             @mouseleave="timeout = setTimeout(() => open = false, 200)">
+          <a href="{{ route('visit.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Semua Data</a>
+          <a href="{{ route('charts.operator') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Grafik Operator</a>
+          <a href="{{ route('laporan.download') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Unduh Laporan</a>
+        </div>
+      </div>
+
+      <!-- Data Peminjaman -->
       <a href="{{ route('charts') }}"
          class="{{ request()->is('grafik') ? 'text-brand-700 underline underline-offset-8 decoration-2' : 'text-gray-700 hover:text-brand-700' }}">
         Data Peminjaman
       </a>
+
+      <!-- Arsip -->
       <a href="{{ route('arsip') }}"
          class="{{ request()->is('arsip-sarpras') ? 'text-brand-700 underline underline-offset-8 decoration-2' : 'text-gray-700 hover:text-brand-700' }}">
         Arsip Sarpras
@@ -73,7 +101,8 @@
     </nav>
 
     <!-- MENU MOBILE -->
-    <button class="md:hidden px-4 py-2 rounded-xl border border-gray-200 text-gray-700" x-data @click="document.getElementById('mnav').classList.toggle('hidden')">
+    <button class="md:hidden px-4 py-2 rounded-xl border border-gray-200 text-gray-700"
+            @click="document.getElementById('mnav').classList.toggle('hidden')">
       <i data-lucide="menu" class="w-5 h-5"></i>
     </button>
   </header>
@@ -81,8 +110,8 @@
   <!-- MOBILE NAV -->
   <div id="mnav" class="md:hidden hidden border-t bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-3 flex flex-col gap-3 text-sm font-medium">
-      <a href="{{ route('form.create') }}" class="text-gray-700">Data Kunjungan</a>
-      <a href="{{ route('visit.index') }}" class="text-gray-700">Laporan Kunjungan</a>
+      <a href="{{ url('/') }}" class="text-gray-700">Beranda</a>
+      <a href="{{ route('visit.index') }}" class="text-gray-700">Data Kunjungan</a>
       <a href="{{ route('charts') }}" class="text-gray-700">Data Peminjaman</a>
       <a href="{{ route('arsip') }}" class="text-gray-700">Arsip Sarpras</a>
     </div>
