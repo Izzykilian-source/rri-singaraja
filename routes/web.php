@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\PeminjamanController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -32,8 +32,8 @@ Route::view('/grafik', 'charts')->name('charts');   // Grafik umum (misalnya pem
 
 // Grafik Operator (baru, sesuai permintaan client)
 Route::view('/grafik-operator', 'charts-operator')->name('charts.operator');
-
-
+Route::get('/peminjaman', [PeminjamanController::class, 'index'])->name('peminjaman.index');
+Route::resource('peminjaman', PeminjamanController::class);
 // =================== ARSIP SARPRAS ===================
 Route::view('/arsip-sarpras', 'arsip')->name('arsip');   // Arsip sarpras
 
