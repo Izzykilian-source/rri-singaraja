@@ -94,8 +94,8 @@
       </a>
 
       <!-- Arsip -->
-      <a href="{{ route('arsip') }}"
-         class="{{ request()->is('arsip-sarpras') ? 'text-brand-700 underline underline-offset-8 decoration-2' : 'text-gray-700 hover:text-brand-700' }}">
+      <a href="{{ route('arsip-sarpras.index') }}"
+         class="{{ request()->is('arsip-sarpras.index') ? 'text-brand-700 underline underline-offset-8 decoration-2' : 'text-gray-700 hover:text-brand-700' }}">
         Arsip Sarpras
       </a>
     </nav>
@@ -113,7 +113,7 @@
       <a href="{{ url('/') }}" class="text-gray-700">Beranda</a>
       <a href="{{ route('visit.index') }}" class="text-gray-700">Data Kunjungan</a>
       <a href="{{ route('charts') }}" class="text-gray-700">Data Peminjaman</a>
-      <a href="{{ route('arsip') }}" class="text-gray-700">Arsip Sarpras</a>
+      <a href="{{ route('arsip-sarpras.index') }}" class="text-gray-700">Arsip Sarpras</a>
     </div>
   </div>
 

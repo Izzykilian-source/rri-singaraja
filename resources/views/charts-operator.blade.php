@@ -23,7 +23,7 @@
 </section>
 
 <script>
-  // Contoh dummy data (nanti bisa diisi dari controller dengan data asli)
+  
   const operatorData = {
     labels: ['Operator A', 'Operator B', 'Operator C', 'Operator D'],
     datasets: [{

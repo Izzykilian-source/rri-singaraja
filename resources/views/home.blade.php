@@ -73,7 +73,7 @@ function carousel() {
         title: "Selamat Datang, Sahabat RRI",
         text: "Mengelola laporan riwayat peminjaman Sarana dan Prasarana.",
         button: "Riwayat Peminjaman",
-        link: "{{ route('arsip') }}",
+        link: "{{ route('arsip-sarpras.index') }}",
         image: "{{ asset('images/slide3.svg') }}"
       }
     ],

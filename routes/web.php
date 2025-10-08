@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PeminjamanController;
+use App\Http\Controllers\PengembalianController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -35,8 +36,7 @@ Route::view('/grafik-operator', 'charts-operator')->name('charts.operator');
 Route::get('/peminjaman', [PeminjamanController::class, 'index'])->name('peminjaman.index');
 Route::resource('peminjaman', PeminjamanController::class);
 // =================== ARSIP SARPRAS ===================
-Route::view('/arsip-sarpras', 'arsip')->name('arsip');   // Arsip sarpras
-
+Route::resource('arsip-sarpras', PengembalianController::class);
 
 // =================== LAPORAN (UNDUH) ===================
 Route::get('/laporan/download', function () {
