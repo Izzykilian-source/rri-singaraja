@@ -88,7 +88,7 @@
       </div>
 
       <!-- Data Peminjaman -->
-      <a href="{{ route('charts') }}"
+      <a href="{{ route('peminjaman.index') }}"
          class="{{ request()->is('grafik') ? 'text-brand-700 underline underline-offset-8 decoration-2' : 'text-gray-700 hover:text-brand-700' }}">
         Data Peminjaman
       </a>

@@ -10,12 +10,16 @@ class Peminjaman extends Model
     use HasFactory;
 
     protected $fillable = [
-        'nama_aset',
-        'foto',
+        'nama_lengkap',
+        'instansi',
+        'divisi',
+        'no_hp',
+        'nama_barang',
         'tanggal_pinjam',
-        'kondisi',
+        'tanggal_kembali',
+        'kondisi_barang',
+        'foto_pinjam',
+        'keterangan',
     ];
-
-    protected $dates = ['tanggal_pinjam'];
 }
 

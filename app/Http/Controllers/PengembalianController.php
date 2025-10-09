@@ -10,12 +10,12 @@ class PengembalianController extends Controller
     public function index()
     {
         $pengembalians = Pengembalian::latest()->get();
-        return view('arsip-sarpras.index', compact('pengembalians'));
+        return view('arsip.index', compact('pengembalians'));
     }
 
     public function create()
     {
-        return view('arsip-sarpras.create');
+        return view('arsip.create');
     }
 
     public function store(Request $request)
@@ -46,8 +46,23 @@ class PengembalianController extends Controller
             'foto_kembali' => $fotoKembali,
         ]);
 
-        return redirect()->route('arsip.index')->with('success', 'Data pengembalian berhasil ditambahkan!');
+        return redirect()->route('arsip-sarpras.index')->with('success', 'Data pengembalian berhasil ditambahkan!');
     }
+public function destroy($id)
+{
+    $item = \App\Models\Pengembalian::findOrFail($id);
+
+    // Hapus file foto kalau ada
+    if ($item->foto_kembali && \Storage::disk('public')->exists($item->foto_kembali)) {
+        \Storage::disk('public')->delete($item->foto_kembali);
+    }
+
+    $item->delete();
+
+    return redirect()
+        ->route('arsip-sarpras.index')
+        ->with('success', 'Data pengembalian berhasil dihapus.');
+}
 
     public function show($id)
     {

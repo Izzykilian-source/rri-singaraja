@@ -20,25 +20,68 @@ class PeminjamanController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'nama_aset' => 'required|string|max:255',
+        $validated = $request->validate([
+            'nama_lengkap' => 'required|string|max:255',
+            'instansi' => 'nullable|string|max:255',
+            'divisi' => 'nullable|string|max:255',
+            'no_hp' => 'nullable|string|max:20',
+            'nama_barang' => 'required|string|max:255',
             'tanggal_pinjam' => 'required|date',
-            'kondisi' => 'required|string',
-            'foto' => 'nullable|image|mimes:jpg,png,jpeg|max:2048'
+            'tanggal_kembali' => 'nullable|date',
+            'kondisi_barang' => 'required|string|max:255',
+            'keterangan' => 'nullable|string',
+            'foto_pinjam' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        $foto = null;
-        if ($request->hasFile('foto')) {
-            $foto = $request->file('foto')->store('peminjaman', 'public');
+        if ($request->hasFile('foto_pinjam')) {
+            $validated['foto_pinjam'] = $request->file('foto_pinjam')->store('peminjaman', 'public');
         }
 
-        Peminjaman::create([
-            'nama_aset' => $request->nama_aset,
-            'tanggal_pinjam' => $request->tanggal_pinjam,
-            'kondisi' => $request->kondisi,
-            'foto' => $foto,
+        Peminjaman::create($validated);
+
+        return redirect()->route('peminjaman.index')->with('success', 'Data peminjaman berhasil ditambahkan!');
+    }
+
+    public function edit(Peminjaman $peminjaman)
+    {
+        return view('peminjaman.edit', compact('peminjaman'));
+    }
+
+    public function update(Request $request, Peminjaman $peminjaman)
+    {
+        $validated = $request->validate([
+            'nama_lengkap' => 'required|string|max:255',
+            'instansi' => 'nullable|string|max:255',
+            'divisi' => 'nullable|string|max:255',
+            'no_hp' => 'nullable|string|max:20',
+            'nama_barang' => 'required|string|max:255',
+            'tanggal_pinjam' => 'required|date',
+            'tanggal_kembali' => 'nullable|date',
+            'kondisi_barang' => 'required|string|max:255',
+            'keterangan' => 'nullable|string',
+            'foto_pinjam' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        return redirect()->route('peminjaman.index')->with('success', 'Data berhasil ditambahkan!');
+        if ($request->hasFile('foto_pinjam')) {
+            if ($peminjaman->foto_pinjam && \Storage::disk('public')->exists($peminjaman->foto_pinjam)) {
+                \Storage::disk('public')->delete($peminjaman->foto_pinjam);
+            }
+            $validated['foto_pinjam'] = $request->file('foto_pinjam')->store('peminjaman', 'public');
+        }
+
+        $peminjaman->update($validated);
+
+        return redirect()->route('peminjaman.index')->with('success', 'Data peminjaman berhasil diperbarui!');
+    }
+
+    public function destroy(Peminjaman $peminjaman)
+    {
+        if ($peminjaman->foto_pinjam && \Storage::disk('public')->exists($peminjaman->foto_pinjam)) {
+            \Storage::disk('public')->delete($peminjaman->foto_pinjam);
+        }
+
+        $peminjaman->delete();
+
+        return redirect()->route('peminjaman.index')->with('success', 'Data peminjaman berhasil dihapus!');
     }
 }

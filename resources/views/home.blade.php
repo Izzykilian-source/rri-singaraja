@@ -65,7 +65,7 @@ function carousel() {
         title: "Selamat Datang, Sahabat RRI",
         text: "Menciptakan alur tracking peminjaman sarana dan prasarana yang terintegrasi sistem.",
         button: "Konfirmasi Peminjaman",
-        link: "{{ route('charts') }}",
+        link: "{{ route('peminjaman.index') }}",
         image: "{{ asset('images/slide2.svg') }}"
       },
       {
